@@ -43,6 +43,8 @@ Each model declares a closed set of accepted roles or `*_references` params. Pas
 | `grok_video_v15` | `start_image` | Required single start frame. CLI also accepts `--image` and maps it to `start_image`. |
 | `kling3_0` | `start_image`, `end_image` | Image-to-video with optional last-frame transition. |
 | `kling3_0_turbo` | `start_image` | Fast text-to-video or single start-frame animation. Max 1 reference; CLI also accepts `--image` and maps it to `start_image`. |
+| `kling4_0` | `start_image`, `end_image`, `image_references`, `video_references` | Roles depend on `--mode`: `text-to-video` takes no media; `image-to-video` uses ordered `start_image`/`end_image` keyframes; `reference-to-video` uses `image_references`/`video_references` (or up to 7 `kling_element_ids`); `video-edit` edits an input video (the only video role is `video_references`). |
+| `kling_o3_image_reference` | `image_references` | Kling 3.0 Omni. Up to 7 image references via repeated `--image-references`; no start/end frame roles. |
 | `kling2_6` | `start_image` | Single frame anchor. |
 | `veo3_1` | `start_image` | Max 1 reference. |
 | `veo3` | `image` | Single image-to-video. |

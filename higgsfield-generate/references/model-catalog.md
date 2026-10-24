@@ -50,6 +50,8 @@ Preferred defaults for examples and quick-start guidance in this repo:
 | Seedance 2.5 | Bytedance | **SOTA all-purpose video; the default for serious motion, cinematic and production briefs.** Supports 4–30s output up to 1080p, reference-driven generation, editing and extension. Modes `t2v` / `omni_reference` / `video_edit` / `video_extension`. |
 | Kling 3.0 | Kling | **Lower-cost option** for single-plane scenes that don't need heavy motion. Multi-shot, audio sync, motion transfer. |
 | Kling 3.0 Turbo | Kling | **Fast Kling option for simple motion.** Text-to-video and single start-frame animation when the user explicitly wants speed, lower cost, or a quick Kling 3.0 variant. |
+| Kling 4.0 (`kling4_0`) | Kling | **Newest Kling for keyframes, references, and edits.** Text-to-video, ordered start/end keyframes, reference-to-video (images, videos, or up to 7 Kling element ids), or editing an input video. Modes `text-to-video` / `image-to-video` / `reference-to-video` / `video-edit`; 3–30s; `720p`/`1080p`. |
+| Kling 3.0 Omni (`kling_o3_image_reference`) | Kling | **Kling video from text and up to 7 reference images.** 3–15s, modes `std`/`pro`/`4k`, sound `on`/`off`, optional multi-shot via `multi_shots` + `multi_prompt`. |
 | Seedance 1.5 Pro | Bytedance | A budget-friendly Seedance for clean single-take shots. |
 | Marketing Studio | Higgsfield | **All advertising and commercial video** — UGC, unboxing, TV spot, product showcase. The default whenever the brief is "make an ad". See `marketing-modes.md`. |
 | Cinema Studio 4.0 (`cinematic_studio_video_4_0`) | Higgsfield | **Cinema-grade execution** when the user asks for Cinema Studio. Modes `t2v` / `omni_reference` / `video_edit` / `video_extension`, up to 1080p, camera/lens/light/genre controls. |
@@ -131,7 +133,7 @@ Match by intent, not surface keyword. When two could apply, the higher entry win
 ### Video — only when asked
 
 - **Cheaper or faster:** Kling 3.0 Turbo, Veo 3.1 Lite, or Seedance 1.5 Pro.
-- **Named by the user:** Cinema Studio 4.0, Cinema Studio 3.0, Kling 3.0, Kling 2.6, Veo 3.1, Veo 3, Minimax Hailuo, Wan 2.7, Wan 2.6, Gemini Omni Flash, Grok Video 1.5, Grok Imagine (video), the earlier Cinema Studio Video variants, and the unprofiled models listed above.
+- **Named by the user:** Cinema Studio 4.0, Cinema Studio 3.0, Kling 4.0, Kling 3.0 Omni, Kling 3.0, Kling 2.6, Veo 3.1, Veo 3, Minimax Hailuo, Wan 2.7, Wan 2.6, Gemini Omni Flash, Grok Video 1.5, Grok Imagine (video), the earlier Cinema Studio Video variants, and the unprofiled models listed above.
 
 ### Video analysis — pick this default
 
@@ -177,6 +179,8 @@ Each model accepts a fixed set of media roles or `*_references` params. When uns
 | Kling 3.0 | `start_image`, `end_image` |
 | Cinema Studio 4.0 | `start_image`, `end_image` (`omni_reference` only), `image_references`, `video_references`, `audio_references`; up to 30 images |
 | Kling 3.0 Turbo | `start_image` (max 1; CLI also accepts `--image`) |
+| Kling 4.0 (`kling4_0`) | `start_image`, `end_image` (`image-to-video`), `image_references`, `video_references` (`reference-to-video` / `video-edit`) |
+| Kling 3.0 Omni (`kling_o3_image_reference`) | `image_references` (0–7) |
 | Kling 2.6 | `start_image` |
 | Grok Video 1.5 | `start_image` (max 1) or `image_references`, not both; `audio_references` need an image reference |
 | Veo 3.1 | `start_image` (max 1) |
@@ -206,6 +210,8 @@ Common patterns:
 - **Seedance 2.0** image: `auto`, `21:9`, `16:9`, `4:3`, `1:1`, `3:4`, `9:16`. Duration 4–15s. Resolution `480p`, `720p`, `1080p`, or `4k`. Optional `--bitrate_mode standard|high`, default `standard`.
 - **Kling 3.0**: `16:9`, `9:16`, `1:1`. Duration 3–15s. Modes `std`/`pro`/`4k`. Sound `on`/`off`.
 - **Kling 3.0 Turbo**: `16:9`, `9:16`, `1:1`. Duration 3–15s. Resolution `720p` or `1080p`. Optional single `start_image` only.
+- **Kling 4.0** (`kling4_0`): `21:9`, `16:9`, `9:16`, `1:1`, `auto`. Duration 3–30s (default 10). Resolution `720p` or `1080p` (default `1080p`).
+- **Kling 3.0 Omni** (`kling_o3_image_reference`): `16:9`, `9:16`, `1:1`. Duration 3–15s (default 5). Modes `std`/`pro`/`4k`. Sound `on`/`off` (default `on`). `multi_prompt` (`[{prompt, duration}]`) is required when `multi_shots` is true.
 - **Soul 2.0**: `1:1`, `16:9`, `9:16`, `4:3`, `3:4`, `3:2`, `2:3`. Quality `1.5k` or `2k` maps to backend `720p`/`1080p`.
 - **Soul Cinema** (`soul_cinematic`, `soul_cinema_studio`): same as Soul 2.0 plus `21:9`. Quality `1.5k` or `2k`. `style_id` is accepted only by `soul_cinema_studio`.
 - **Soul Location**: `1:1`, `4:3`, `3:4`, `16:9`, `9:16`, `3:2`, `2:3`, `21:9`, `9:21`. No quality/resolution selector; dimensions are fixed by aspect ratio.

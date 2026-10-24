@@ -202,7 +202,10 @@ higgsfield model get <model>
 
 Common patterns:
 
-- **Seedance 2.5**: duration 4–30s; resolution `480p`, `720p`, or `1080p`. Use `t2v` for prompt-only generation and `omni_reference` for reference inputs. Use Seedance 2.0 when native 4K is required.
+- **Seedance 2.5**: aspect `auto`, `21:9`, `16:9`, `4:3`, `1:1`, `3:4`, `9:16`. Duration 4–30s whole seconds (default `5`). Resolution `480p`, `720p` (default), or `1080p` in every mode, including `video_edit` and `video_extension`. `--generate_audio` defaults `true`; `--bitrate_mode standard|high`, default `standard`. Use `t2v` for prompt-only generation and `omni_reference` for reference inputs. Use Seedance 2.0 when native 4K is required.
+  - `video_edit`: one `--video-references` clip; billed by that clip's duration; `duration` and `aspect_ratio` are ignored.
+  - `video_extension`: one `--video-references` clip plus **required** `--extension_mode backward|forward` (not allowed in other modes); `aspect_ratio` is ignored (output follows the source clip).
+  - Drafts: `--draft true` renders a cheap 480p draft; finalize it at 1080p within 7 days with `--draft_job_id <draft_job_id>`.
 - **Seedance 2.0** image: `auto`, `21:9`, `16:9`, `4:3`, `1:1`, `3:4`, `9:16`. Duration 4–15s. Resolution `480p`, `720p`, `1080p`, or `4k`. Optional `--bitrate_mode standard|high`, default `standard`.
 - **Kling 3.0**: `16:9`, `9:16`, `1:1`. Duration 3–15s. Modes `std`/`pro`/`4k`. Sound `on`/`off`.
 - **Kling 3.0 Turbo**: `16:9`, `9:16`, `1:1`. Duration 3–15s. Resolution `720p` or `1080p`. Optional single `start_image` only.

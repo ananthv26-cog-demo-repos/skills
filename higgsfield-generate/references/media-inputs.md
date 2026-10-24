@@ -37,7 +37,7 @@ Each model declares a closed set of accepted roles or `*_references` params. Pas
 | `nano_banana_2_lite` | `image_references` | Up to 14 image references. Use repeated `--image-references` or short alias `--image`; `aspect_ratio=auto` requires at least one reference. |
 | `gemini_omni` | `image_references`, `video_references` | Fast reference-to-video. Use repeated `--image-references`/`--video-references` or aliases `--image`/`--video`. Max 1 video reference; max 7 image references, or max 5 when a video reference is included. |
 | `gpt_image_2_5` | `image_references` | Use repeated `--image-references` or the short alias `--image`. |
-| `seedance_2_5` | `start_image`, `end_image`, `image_references`, `video_references`, `audio_references` | Use `--mode omni_reference` for reference generation. `t2v` accepts no media. |
+| `seedance_2_5` | `start_image`, `end_image`, `image_references`, `video_references`, `audio_references` | Use `--mode omni_reference` for reference generation. `t2v` accepts no media. `video_edit` / `video_extension` take one `--video-references` clip; `video_extension` also requires `--extension_mode backward\|forward`. See [Video edit and extension (Seedance 2.5)](#video-edit-and-extension-seedance-25). |
 | `seedance_2_0` | `image`, `start_image`, `end_image`, `video`, `audio` | Audio is via `medias` (role `audio`), NOT via `--generate-audio`. |
 | `brain_activity` | `video` | Virality Predictor analyzes one uploaded clip and returns a text score report plus an Open report link; no prompt required. Treat "analyze this video" / "score this ad" as this video-analysis flow even though the output is text. Raw `.glb` and `.bin` artifacts stay in JSON/debug output, not normal chat output. |
 | `grok_video_v15` | `start_image` | Required single start frame. CLI also accepts `--image` and maps it to `start_image`. |
@@ -78,6 +78,20 @@ higgsfield generate create multi_image_to_3d \
   --image ./front.png --image ./side.png --image ./back.png \
   --should_texture true \
   --wait
+```
+
+## Video edit and extension (Seedance 2.5)
+
+Pass the source clip with `--video-references` (alias `--video`). Edit is billed by the source clip's duration and ignores `--duration` / `--aspect_ratio`. Extension ignores `--aspect_ratio` and requires `--extension_mode` (`forward` appends after the clip, `backward` prepends before it); do not pass `--extension_mode` in other modes.
+
+```bash
+higgsfield generate create seedance_2_5 --mode video_edit \
+  --prompt "turn the street into a snowy night" \
+  --video-references ./clip.mp4 --resolution 720p --wait
+
+higgsfield generate create seedance_2_5 --mode video_extension --extension_mode forward \
+  --prompt "the camera keeps pushing in" \
+  --video-references <previous_job_id> --duration 5 --resolution 720p --wait
 ```
 
 ## Audio reference (Seedance)

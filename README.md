@@ -1,7 +1,7 @@
 # Higgsfield AI Skills
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
-[![Version](https://img.shields.io/badge/version-0.13.0-green.svg)](./VERSION)
+[![Version](https://img.shields.io/badge/version-0.13.1-green.svg)](./VERSION)
 [![Skills](https://img.shields.io/badge/skills-8-blueviolet.svg)](#skills)
 [![Discord](https://img.shields.io/badge/discord-join-5865F2?logo=discord&logoColor=white)](https://discord.com/invite/higgsfield)
 
